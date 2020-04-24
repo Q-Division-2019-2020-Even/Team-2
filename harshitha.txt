@@ -1,0 +1,122 @@
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(42,43,44,46,48,50);
+
+const int S0 = 7;
+const int S1 = 6;
+const int outPut= 5;
+const int S2 = 4;
+const int S3 = 3;
+ unsigned int r=0,g=0,b=0,f=0;
+ int amt=0;
+  int i=0;
+void setup() {
+  pinMode(13,INPUT);   // IR SENSOR
+  pinMode(12,OUTPUT); // DC MOTOR-1 
+  pinMode(11,OUTPUT); // DC MOTOR-1
+  pinMode(9,OUTPUT);  // DC MOTOR-2
+  pinMode(8,OUTPUT);  // DC MOTOR-2
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  pinMode(outPut, INPUT);
+
+  digitalWrite(S0,HIGH);
+  digitalWrite(S1,HIGH);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+   if(digitalRead(13)==HIGH)
+  {
+    digitalWrite(12,HIGH);  
+    digitalWrite(11,LOW);  
+    /*DC MOTOR-1 CLOCKWISE ROTATION*/
+    digitalWrite(9,HIGH);   
+    digitalWrite(8,LOW);
+    /*DC MOTOR-2 ANTI-CLOCKWISE ROTATION*/
+  { 
+    Serial.print("Red (frequency)=");
+  digitalWrite(S2,LOW);
+  digitalWrite(S3,LOW);
+  r = pulseIn(outPut, LOW);
+  Serial.print(r);
+  Serial.print("\t");
+
+delay(500);
+
+Serial.print("Blue (frequency)=");
+digitalWrite(S2,LOW);
+digitalWrite(S3,HIGH);
+b = pulseIn(outPut, LOW);
+Serial.print(b);
+Serial.print("\t");
+
+delay(500);
+
+Serial.print("Green (frequency)=");
+digitalWrite(S2,HIGH);
+digitalWrite(S3,HIGH);
+g = pulseIn(outPut, LOW);
+Serial.print(g);
+Serial.print("\t");
+delay(500);
+
+
+Serial.print("NO FILTER (frequency)=");
+digitalWrite(S2,HIGH);
+digitalWrite(S3,LOW);
+f= pulseIn(outPut, LOW);
+Serial.print(f);
+Serial.print("\t");
+delay(500);
+
+Serial.print("\n");
+     
+  if(r>20 && r<100)
+  {       
+ i++;
+    lcd.setCursor(0,1);
+       amt=amt+20;
+       lcd.print("Total amt=");
+      lcd.print( amt);
+
+  }
+else if(b>20 && b<100)
+{       i++;
+
+  lcd.setCursor(0,1);
+       amt=amt+50;
+       lcd.print("Total amt=");
+              lcd.print(amt);
+
+  }
+  else if(g>20 && g<100)
+{  
+        i++;
+       lcd.setCursor(0,1);
+       amt=amt+500;
+       lcd.print("Total amt=");
+       lcd.print(amt);
+
+  }
+  else
+{  
+    lcd.setCursor(0,1);
+    lcd.print("no note detected "); 
+  }
+  }
+  }
+else 
+{
+  digitalWrite(12,LOW);
+  digitalWrite(11,LOW);  /* dc motor 1 and 2----OFF*/
+  digitalWrite(9,LOW);
+  digitalWrite(8,LOW);
+}
+    lcd.setCursor(0,1);
+    lcd.print("no. of notes=");
+     lcd.print(i);
+
+}
