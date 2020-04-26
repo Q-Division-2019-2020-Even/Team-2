@@ -1,0 +1,107 @@
+
+include<LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+ int amt= 0 ;
+  int i= 0 ;
+  
+   int buttonstate=7;
+   int r=A0;
+   
+void setup() {
+  pinMode(buttonstate,INPUT);   // IR SENSOR
+  pinMode(0,OUTPUT); // DC MOTOR-1 
+  pinMode(1,OUTPUT); // DC MOTOR-1
+  pinMode(9,OUTPUT);  // DC MOTOR-2
+  pinMode(8,OUTPUT);  // DC MOTOR-2
+  pinMode(r, INPUT); // frequency
+  
+  Serial.begin(9600);
+
+}
+
+void loop() {
+  
+       Serial.println("enter the value 0 or 1:");
+    delay(3000);
+
+       buttonstate=Serial.parseInt();
+       Serial.println(buttonstate);
+  delay(3000);
+{
+   if(buttonstate==1)
+  {
+    digitalWrite(0,HIGH);  
+    digitalWrite(1,LOW);  
+    /*DC MOTOR-1 CLOCKWISE ROTATION*/
+    digitalWrite(9,HIGH);   
+    digitalWrite(8,LOW);
+    /*DC MOTOR-2 ANTI-CLOCKWISE ROTATION*/
+
+    
+       Serial.println("enter the value (frequency):");
+       delay(3000);
+
+       r=Serial.parseInt();
+       Serial.println(r);
+        delay(3000);
+
+       
+  if(r>=400 && r<=484)  //red light frequency
+  {     
+    lcd.setCursor(0,1);
+       amt = amt + 20 ;
+       lcd.print(" Total amt = ");
+        lcd.print( amt);
+    i++;
+   delay(5000);
+
+  }
+else if(r>=606 && r<=668)   //blue light frequency
+{      
+
+  lcd.setCursor(0,1);
+       amt = amt + 50 ;
+       lcd.print(" Total amt = ");
+              lcd.print(amt);
+  i++;
+    delay(5000);
+
+
+  }
+  else if(r>=526 && r<=605) // green light frequency
+{   
+ lcd.setCursor(0,1);
+       amt = amt + 500 ;
+       lcd.print(" Total amt = ");
+              lcd.print(amt);
+    i++;
+    delay(5000);
+
+
+  }
+  else
+{  
+  lcd.setCursor(0,1);
+    lcd.print("no note detected ");
+       delay(5000);
+
+  }
+ 
+  }
+else 
+{
+  digitalWrite(12,LOW);
+  digitalWrite(11,LOW);  /* dc motor 1 and 2----OFF*/
+  digitalWrite(9,LOW);
+  digitalWrite(8,LOW);
+}
+}
+    lcd.setCursor(0,1);
+    lcd.print("no. of notes = ");
+    lcd.print(i);
+     delay(5000);
+
+
+
+
+}
