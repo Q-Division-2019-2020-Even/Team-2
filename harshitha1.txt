@@ -9,11 +9,11 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
    
 void setup() {
   pinMode(buttonstate,INPUT);   // IR SENSOR
-  pinMode(0,OUTPUT); // DC MOTOR-1 
-  pinMode(1,OUTPUT); // DC MOTOR-1
-  pinMode(9,OUTPUT);  // DC MOTOR-2
-  pinMode(8,OUTPUT);  // DC MOTOR-2
-  pinMode(r, INPUT); // frequency
+  pinMode(0,OUTPUT);// DC MOTOR-1 
+  pinMode(1,OUTPUT);// DC MOTOR-1
+  pinMode(9,OUTPUT);// DC MOTOR-2
+  pinMode(8,OUTPUT);// DC MOTOR-2
+  pinMode(r, INPUT);// frequency
   
   Serial.begin(9600);
 
